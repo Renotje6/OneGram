@@ -1,7 +1,8 @@
 'use client';
 
 import LoginLayout from '@/layouts/LoginLayout';
-import { Button, Input, Spinner } from '@nextui-org/react';
+import { Button, Divider, Input, Spinner } from '@nextui-org/react';
+import { FcGoogle } from 'react-icons/fc';
 
 export default function LoginPage() {
 	const handleLogin = () => {
@@ -10,18 +11,38 @@ export default function LoginPage() {
 
 	return (
 		<LoginLayout>
-			<div className='bg-purple-500/50 flex w-[500px]'>
-				<div className='bg-blue-500/50 w-full'>left</div>
-				<div className=' w-full'>
-					<div className='bg-red-500/50 flex flex-col items-center gap-2'>
+			<div className='bg-black/10 flex w-[90%] md:w-[600px] h-[400px] rounded-xl'>
+				<div className='w-full justify-center items-center flex-col gap-8 text-center bg-black/5 h-full hidden md:flex'>
+					<p className='text-5xl font-semibold'>OneGram</p>
+					<p className='text-zinc-200'>
+						Do you need help logging in? <br />
+						Get help{' '}
+						<a
+							href='#'
+							className='text-primary-500'>
+							Here
+						</a>
+					</p>
+				</div>
+				<div className=' w-full flex flex-col gap-3 justify-center p-3'>
+					<h1 className='font-semibold text-4xl text-center hidden md:block'>Login</h1>
+					<h1 className='text-5xl font-semibold md:hidden text-center'>OneGram</h1>
+					<div className='flex flex-col items-center gap-2'>
 						<Input placeholder='Email' />
 						<Input placeholder='Password' />
-						<Button onClick={handleLogin}>Login</Button>
+						<Button
+							color='primary'
+							className='w-full'
+							onClick={handleLogin}>
+							Login
+						</Button>
 					</div>
-					<div className='bg-green-500/50'>
+					<div className='flex justify-center flex-col items-center gap-2'>
+						<Divider className='bg-black/10 h-0.5' />
+						<p className='text-sm'>Or Login With:</p>
 						<Button
 							isIconOnly
-							startContent={}
+							startContent={<FcGoogle className='size-6' />}
 						/>
 					</div>
 				</div>

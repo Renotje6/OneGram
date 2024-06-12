@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { K2D } from 'next/font/google';
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
+// const inter = Inter({ subsets: ['latin'] });
+
+const font = K2D({ subsets: ['latin'], weight: '400' });
 
 export const metadata: Metadata = {
 	title: 'Create Next App',
@@ -15,8 +17,11 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang='en'>
-			<body className='font-K2D bg-gradient-to-b from-white to-gray-400 dark:bg-gradient-to-b dark:from-zinc-800 dark:to-zinc-950 min-h-screen'>{children}</body>
+		<html
+			lang='en'
+			suppressHydrationWarning
+			className={font.className}>
+			<body className='bg-gradient-to-b from-white to-gray-400 dark:bg-gradient-to-b dark:from-zinc-800 dark:to-zinc-950 min-h-screen'>{children}</body>
 		</html>
 	);
 }
