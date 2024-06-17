@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { FC } from 'react';
 import { BiHome } from 'react-icons/bi';
 import { CgProfile } from 'react-icons/cg';
-import { MdOutlineSettings } from 'react-icons/md';
+import { MdOutlineAddBox, MdOutlineSettings } from 'react-icons/md';
 
 interface NavBarProps {}
 
@@ -33,8 +33,8 @@ const NavBar: FC<NavBarProps> = ({}) => {
 					href='/'
 				/>
 				<NavButton
-					icon={<BiHome className='size-6' />}
-					label='Home'
+					icon={<MdOutlineAddBox className='size-6' />}
+					label='Create'
 					href='/'
 				/>
 			</div>
