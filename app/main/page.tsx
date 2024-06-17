@@ -3,10 +3,9 @@
 import MainLayout from '@/layouts/MainLayout';
 
 export default function MainPage() {
-
 	return (
 		<MainLayout>
-        <p>Main page</p>
+			<p>Main page</p>
 		</MainLayout>
 	);
 }

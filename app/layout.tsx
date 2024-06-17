@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { K2D } from 'next/font/google';
 import './globals.css';
+import Providers from './providers';
 
 // const inter = Inter({ subsets: ['latin'] });
 
@@ -21,7 +22,9 @@ export default function RootLayout({
 			lang='en'
 			suppressHydrationWarning
 			className={font.className}>
-			<body className='bg-gradient-to-b from-white to-gray-400 dark:bg-gradient-to-b dark:from-zinc-800 dark:to-zinc-950 min-h-screen'>{children}</body>
+			<Providers>
+				<body className='bg-gradient-to-b from-white to-gray-400 dark:bg-gradient-to-b dark:from-zinc-800 dark:to-zinc-950 min-h-screen'>{children}</body>
+			</Providers>
 		</html>
 	);
 }

@@ -1,12 +1,11 @@
 'use client';
 
-import AccountLayout from '@/layouts/AccountLayout';
+import MainLayout from '@/layouts/MainLayout';
 
 export default function AccountPage() {
-
 	return (
-		<AccountLayout>
-        <p>Account page</p>
-		</AccountLayout>
+		<MainLayout>
+			<p>Account page</p>
+		</MainLayout>
 	);
 }
