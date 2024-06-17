@@ -1,3 +1,4 @@
+import NavBar from '@/components/navbar';
 import { FC } from 'react';
 
 interface MainLayoutProps {
@@ -5,7 +6,12 @@ interface MainLayoutProps {
 }
 
 const MainLayout: FC<MainLayoutProps> = ({ children }) => {
-	return <div className='flex items-center justify-center h-screen'>{children}</div>;
+	return (
+		<div className='flex'>
+			<NavBar />
+			{children}
+		</div>
+	);
 };
 
 export default MainLayout;
