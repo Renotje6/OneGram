@@ -16,6 +16,7 @@ const SideBar: FC<SideBarProps> = ({}) => {
 				<div className='p-2 flex flex-col gap-2 items-start'>
 					<SideBarUser
 						following
+						id='jane-doe'
 						name='Jane Doe'
 						lastseen='5h ago'
 						image='https://i.pravatar.cc/150?u=a04258114e29026702d'
@@ -44,19 +45,20 @@ const SideBar: FC<SideBarProps> = ({}) => {
 };
 
 interface SideBarUserProps {
+	id: string;
 	name: string;
 	following: boolean;
 	lastseen?: string;
 	image: string;
 }
 
-const SideBarUser: FC<SideBarUserProps> = ({ name, following, image, lastseen }) => {
+const SideBarUser: FC<SideBarUserProps> = ({ id, name, following, image, lastseen }) => {
 	return (
 		<Button
 			as={Link}
 			size='lg'
 			variant='light'
-			href={`/profile/${name}`}
+			href={`/profile/${id}`}
 			className='flex justify-between w-full items-center p-2'
 			endContent={following! ? <MdLibraryAdd className='size-6 mr-2 dark:text-zinc-400' /> : null}
 			startContent={
