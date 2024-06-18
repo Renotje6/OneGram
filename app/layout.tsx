@@ -22,9 +22,9 @@ export default function RootLayout({
 			lang='en'
 			suppressHydrationWarning
 			className={font.className}>
-			<Providers>
-				<body className='bg-gradient-to-b from-white to-gray-400 dark:bg-gradient-to-b dark:from-zinc-800 dark:to-zinc-950 min-h-screen'>{children}</body>
-			</Providers>
+			<body className='bg-gradient-to-b from-white to-gray-400 dark:bg-gradient-to-b dark:from-zinc-800 dark:to-zinc-950 min-h-screen'>
+				<Providers>{children}</Providers>
+			</body>
 		</html>
 	);
 }

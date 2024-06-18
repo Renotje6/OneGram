@@ -1,4 +1,5 @@
 import NavBar from '@/components/navbar';
+import SideBar from '@/components/sidebar';
 import { FC } from 'react';
 
 interface MainLayoutProps {
@@ -9,7 +10,8 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
 	return (
 		<div className='flex'>
 			<NavBar />
-			{children}
+			<main className='flex-grow justify-center items-center'>{children}</main>
+			<SideBar />
 		</div>
 	);
 };
