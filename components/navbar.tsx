@@ -8,7 +8,7 @@ interface NavBarProps {}
 
 const NavBar: FC<NavBarProps> = ({}) => {
 	return (
-		<nav className='bg-black/20 text-black p-4 min-h-screen w-80 flex-col gap-5 justify-between shadow-lg hidden lg:flex'>
+		<nav className='bg-black/20 text-black p-4 min-h-screen w-80 flex-col gap-5 justify-between shadow-lg hidden lg:flex min-w-80'>
 			<p className='text-5xl font-semibold dark:text-zinc-200'>OneGram</p>
 			<div className=' h-full'>
 				<NavButton

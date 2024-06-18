@@ -10,7 +10,7 @@ interface SideBarProps {}
 
 const SideBar: FC<SideBarProps> = ({}) => {
 	return (
-		<nav className='bg-black/20 text-black p-4 min-h-screen w-80 flex-col gap-5 justify-between shadow-lg hidden lg:flex'>
+		<nav className='bg-black/20 text-black p-4 min-h-screen w-80 flex-col gap-5 justify-between shadow-lg hidden lg:flex min-w-80'>
 			<div className='h-full'>
 				<p className='text-lg font-semibold dark:text-zinc-300'>YOUR FOLLOWERS</p>
 				<div className='p-2 flex flex-col gap-2 items-start'>
@@ -28,12 +28,12 @@ const SideBar: FC<SideBarProps> = ({}) => {
 					as={Link}
 					size='lg'
 					variant='light'
-					href={`/profile/username`}
-					className='flex justify-between w-full items-center p-2'
+					href={`/logout`}
+					className='flex justify-between w-full items-center p-2 text-black dark:text-zinc-300'
 					endContent={<TbLogout className='size-6 dark:text-zinc-400' />}
 					startContent={
 						<User
-							name='Username'
+							name='Logout'
 							avatarProps={{ src: '', showFallback: true }}
 							classNames={{ description: 'text-zinc-500', name: 'font-semibold dark:text-zinc-300 text-lg' }}
 						/>
