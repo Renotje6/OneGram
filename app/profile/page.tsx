@@ -25,6 +25,10 @@ const images = [
 		src: '/placeholder.png',
 		alt: 'Image 4',
 	},
+	{
+		src: '/placeholder.png',
+		alt: 'Image 4',
+	},
 ];
 
 export default function AccountPage() {
