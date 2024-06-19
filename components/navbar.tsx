@@ -15,7 +15,7 @@ const NavBar: FC<NavBarProps> = ({}) => {
 				<NavButton
 					icon={<FaHome className='size-6 dark:text-zinc-300' />}
 					label='HOME'
-					href='/create'
+					href='/'
 				/>
 				<NavButton
 					icon={<IoMdAddCircleOutline className='size-6 dark:text-zinc-300' />}
@@ -32,8 +32,8 @@ const NavBar: FC<NavBarProps> = ({}) => {
 				/>
 				<NavButton
 					icon={<FaGear className='size-6' />}
-					label='Setting'
-					href='/setting'
+					label='Settings'
+					href='/settings'
 				/>
 			</div>
 		</nav>

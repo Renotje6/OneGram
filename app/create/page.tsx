@@ -7,17 +7,16 @@ import {Textarea} from "@nextui-org/react";
 export default function AccountPage() {
 	return (
 		<MainLayout>
-            <Textarea
-            
-            isRequired
-            label="Description"
-            labelPlacement="outside"
-            placeholder="Enter your description"
-            className="max-w-xs"
-            />
             <div className="">
             <input type="file" accept="image/*" />
             </div>
+            <Textarea
+            isRequired
+            label="Recipe"
+            labelPlacement="outside"
+            placeholder="Enter your recipe"
+            className="max-w-xs"
+            />
 		</MainLayout>
 	);
 }
