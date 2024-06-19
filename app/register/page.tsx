@@ -6,25 +6,40 @@ import { collection, doc, getDoc, setDoc } from '@firebase/firestore';
 import { FirebaseError } from '@firebase/util';
 import { Button, Divider, Input } from '@nextui-org/react';
 import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
+import { useUser } from '../contexts/userContext';
 
-export default function LoginPage() {
+export default function RegisterPage() {
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState('');
 
+	const { setUser } = useUser();
+
+	const router = useRouter();
+
 	const signUpWithEmailAndPassword = async () => {
 		const userCollection = collection(db, 'users');
 
 		try {
-			const user = await createUserWithEmailAndPassword(auth, email, password);
+			const authUser = await createUserWithEmailAndPassword(auth, email, password);
 
-			setDoc(doc(userCollection, user.user.uid), {
+			await setDoc(doc(userCollection, authUser.user.uid), {
+				uid: authUser.user.uid,
 				name,
 				email,
+				friends: [],
 			});
+
+			setUser({
+				...authUser,
+				name,
+			});
+
+			router.push('/');
 		} catch (e: any) {
 			if (e instanceof FirebaseError) {
 				switch (e.code) {
@@ -43,7 +58,7 @@ export default function LoginPage() {
 				setError(e.message);
 				console.error(error);
 			}
-
+			console.log(auth.currentUser);
 			alert(error);
 		}
 	};
@@ -60,8 +75,16 @@ export default function LoginPage() {
 					uid: user.user.uid,
 					name: user.user.displayName,
 					email: user.user.email,
+					friends: [],
 				});
 			}
+
+			setUser({
+				...user,
+				name: user.user.displayName || user.user.email || user.user.uid,
+			});
+
+			router.push('/');
 		} catch (e: any) {
 			setError(e.message);
 			console.error(error);
@@ -69,6 +92,11 @@ export default function LoginPage() {
 			alert(e.message);
 		}
 	};
+
+	if (auth.currentUser) {
+		console.log(auth.currentUser);
+		// router.push('/');
+	}
 
 	return (
 		<LoginLayout>
@@ -108,6 +136,7 @@ export default function LoginPage() {
 								setPassword(e.target.value);
 							}}
 						/>
+						{error && <div className='w-full bg-red-200 text-red-800 p-3 rounded-md'>{error}</div>}
 						<Button
 							color='primary'
 							className='w-full'
