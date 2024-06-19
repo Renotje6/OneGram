@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { FC } from 'react';
 import { FaHome, FaUserCircle } from 'react-icons/fa';
 import { FaGear } from 'react-icons/fa6';
+import { IoMdAddCircleOutline } from 'react-icons/io';
 
 interface NavBarProps {}
 
@@ -14,7 +15,12 @@ const NavBar: FC<NavBarProps> = ({}) => {
 				<NavButton
 					icon={<FaHome className='size-6 dark:text-zinc-300' />}
 					label='HOME'
-					href='/'
+					href='/create'
+				/>
+				<NavButton
+					icon={<IoMdAddCircleOutline className='size-6 dark:text-zinc-300' />}
+					label='CREATE'
+					href='/create'
 				/>
 			</div>
 			<div className='h-fit flex gap-2 flex-col'>
