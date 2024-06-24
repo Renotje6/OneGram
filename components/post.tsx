@@ -5,7 +5,24 @@ import { FaRegBookmark, FaRegHeart } from 'react-icons/fa';
 import { LuSend } from 'react-icons/lu';
 import { PiChatCircleTextBold } from 'react-icons/pi';
 
-export default function Post() {
+interface PostProps {
+	title: string;
+	user: {
+		name: string;
+		avatar: string;
+	};
+	image: string;
+	description: string;
+	comments: {
+		user: {
+			name: string;
+			avatar: string;
+		};
+		comment: string;
+	}[];
+}
+
+export default function Post({ title, user, image, description, comments }: PostProps) {
 	const [openComments, setOpenComments] = useState(false);
 
 	return (
@@ -13,25 +30,26 @@ export default function Post() {
 			<div className='relative shadow-lg'>
 				<div className='absolute top-0 p-3'>
 					<User
-						name='Jane Doe'
+						name={user.name}
 						avatarProps={{
 							size: 'md',
-							src: 'https://i.pravatar.cc/150?u=a04258114e29026702d',
+							showFallback: true,
+							src: user.avatar,
 						}}
 					/>
 				</div>
 				<Image
 					className='rounded-lg'
-					src='/post.png'
-					alt='Next.js'
+					src={image ?? 'placeholder.png'}
+					alt={title}
 					width={500}
 					height={200}
 				/>
 				<div className='absolute bottom-0 w-full flex justify-between p-3'>
 					<div className='flex flex-col justify-end w-full'>
 						<div>
-							<p className='text-white font-semibold text-3xl text-wrap'>Title</p>
-							<p className='text-zinc-300 text-lg text-wrap'>Description</p>
+							<p className='text-white font-semibold text-3xl text-wrap'>{title}</p>
+							<p className='text-zinc-300 text-lg text-wrap'>{description}</p>
 						</div>
 					</div>
 					<div className='flex flex-col gap-3'>
@@ -87,7 +105,23 @@ export default function Post() {
 					<div className='flex flex-col gap-2'>
 						<h2>Comments:</h2>
 						<div className='flex flex-col gap-2'>
-							<div className='bg-white/5 p-2 rounded-lg'>
+							{comments.map((comment, index) => (
+								<div
+									key={index}
+									className='bg-white/5 p-2 rounded-lg'>
+									<User
+										classNames={{ name: 'text-zinc-300' }}
+										name={comment.user.name}
+										avatarProps={{
+											size: 'sm',
+											showFallback: true,
+											src: comment.user.avatar,
+										}}
+									/>
+									<p className='text-sm'>{comment.comment}</p>
+								</div>
+							))}
+							{/* <div className='bg-white/5 p-2 rounded-lg'>
 								<User
 									classNames={{ name: 'text-zinc-300' }}
 									name='Jane Doe'
@@ -97,17 +131,7 @@ export default function Post() {
 									}}
 								/>
 								<p className='text-sm'>This is a placeholder comment!</p>
-							</div>
-							<div className='bg-white/5 p-2 rounded-lg'>
-								<User
-									name='Jane Doe'
-									avatarProps={{
-										size: 'sm',
-										src: 'https://i.pravatar.cc/150?u=a04258114e29026702d',
-									}}
-								/>
-								<p className='text-sm'>This is another placeholder comment!</p>
-							</div>
+							</div> */}
 						</div>
 					</div>
 				</div>

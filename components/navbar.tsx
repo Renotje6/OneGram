@@ -9,9 +9,9 @@ interface NavBarProps {}
 
 const NavBar: FC<NavBarProps> = ({}) => {
 	return (
-		<nav className='bg-black/20 text-black p-4 min-h-screen w-80 flex-col gap-5 justify-between shadow-lg hidden lg:flex min-w-80'>
+		<nav className='bg-black/20 text-black p-4 min-h-screen w-80 flex-col gap-5 justify-between shadow-lg hidden lg:flex min-w-80 fixed'>
 			<p className='text-5xl font-semibold dark:text-zinc-200'>OneGram</p>
-			<div className=' h-full'>
+			<div className='flex-grow'>
 				<NavButton
 					icon={<FaHome className='size-6 dark:text-zinc-300' />}
 					label='HOME'

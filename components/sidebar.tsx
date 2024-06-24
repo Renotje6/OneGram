@@ -10,7 +10,7 @@ interface SideBarProps {}
 
 const SideBar: FC<SideBarProps> = ({}) => {
 	return (
-		<nav className='bg-black/20 text-black p-4 min-h-screen w-80 flex-col gap-5 justify-between shadow-lg hidden lg:flex min-w-80'>
+		<nav className='bg-black/20 text-black p-4 min-h-screen w-80 flex-col gap-5 justify-between shadow-lg hidden lg:flex min-w-80 fixed right-0'>
 			<div className='h-full'>
 				<p className='text-lg font-semibold dark:text-zinc-300'>YOUR FOLLOWERS</p>
 				<div className='p-2 flex flex-col gap-2 items-start'>
