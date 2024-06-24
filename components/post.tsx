@@ -1,4 +1,4 @@
-import { Button, User } from '@nextui-org/react';
+import { Button, Textarea, User } from '@nextui-org/react';
 import Image from 'next/image';
 import { useState } from 'react';
 import { FaRegBookmark, FaRegHeart } from 'react-icons/fa';
@@ -9,7 +9,7 @@ export default function Post() {
 	const [openComments, setOpenComments] = useState(false);
 
 	return (
-		<div>
+		<div className='flex flex-col gap-2'>
 			<div className='relative shadow-lg'>
 				<div className='absolute top-0 p-3'>
 					<User
@@ -21,7 +21,7 @@ export default function Post() {
 					/>
 				</div>
 				<Image
-					className=''
+					className='rounded-lg'
 					src='/post.png'
 					alt='Next.js'
 					width={500}
@@ -68,7 +68,50 @@ export default function Post() {
 					</div>
 				</div>
 			</div>
-			{openComments && <div className='bg-black/40 p-3'>Here are comments listed</div>}
+			{openComments && (
+				<div className='bg-black/40 p-3 rounded-lg flex flex-col gap-2 shadow-lg'>
+					<div className='flex flex-col gap-2'>
+						<p>New Comment:</p>
+						<div className='flex gap-2'>
+							<Textarea
+								label='Add Comment'
+								minRows={1}
+							/>
+							<Button
+								color='primary'
+								isIconOnly
+								startContent={<LuSend className='size-6' />}
+							/>
+						</div>
+					</div>
+					<div className='flex flex-col gap-2'>
+						<h2>Comments:</h2>
+						<div className='flex flex-col gap-2'>
+							<div className='bg-white/5 p-2 rounded-lg'>
+								<User
+									classNames={{ name: 'text-zinc-300' }}
+									name='Jane Doe'
+									avatarProps={{
+										size: 'sm',
+										src: 'https://i.pravatar.cc/150?u=a04258114e29026702d',
+									}}
+								/>
+								<p className='text-sm'>This is a placeholder comment!</p>
+							</div>
+							<div className='bg-white/5 p-2 rounded-lg'>
+								<User
+									name='Jane Doe'
+									avatarProps={{
+										size: 'sm',
+										src: 'https://i.pravatar.cc/150?u=a04258114e29026702d',
+									}}
+								/>
+								<p className='text-sm'>This is another placeholder comment!</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			)}
 		</div>
 	);
 }
