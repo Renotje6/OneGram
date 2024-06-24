@@ -1,12 +1,22 @@
+'use client';
+
 import NavBar from '@/components/navbar';
 import SideBar from '@/components/sidebar';
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 interface MainLayoutProps {
 	children: React.ReactNode;
 }
 
 const MainLayout: FC<MainLayoutProps> = ({ children }) => {
+	const [hydrating, setHydrating] = useState(true);
+
+	useEffect(() => {
+		setHydrating(false);
+	}, []);
+
+	if (hydrating) return;
+
 	return (
 		<div className='flex'>
 			<NavBar />

@@ -1,14 +1,18 @@
-import { Button, Divider, User } from '@nextui-org/react';
+'use client';
+
+import { auth } from '@/config/firebase';
+import { Button, User } from '@nextui-org/react';
 import Link from 'next/link';
 import { FC } from 'react';
-import { FaHome, FaUserCircle } from 'react-icons/fa';
-import { FaGear } from 'react-icons/fa6';
 import { MdLibraryAdd } from 'react-icons/md';
 import { TbLogout } from 'react-icons/tb';
+import { useUser } from '../components/contexts/userContext';
 
 interface SideBarProps {}
 
 const SideBar: FC<SideBarProps> = ({}) => {
+	const { user } = useUser();
+
 	return (
 		<nav className='bg-black/20 text-black p-4 min-h-screen w-80 flex-col gap-5 justify-between shadow-lg hidden lg:flex min-w-80 fixed right-0'>
 			<div className='h-full'>
@@ -33,8 +37,8 @@ const SideBar: FC<SideBarProps> = ({}) => {
 					endContent={<TbLogout className='size-6 dark:text-zinc-400' />}
 					startContent={
 						<User
-							name='Logout'
-							avatarProps={{ src: '', showFallback: true }}
+							name={user.name}
+							avatarProps={{ src: auth.currentUser?.photoURL || '', showFallback: true }}
 							classNames={{ description: 'text-zinc-500', name: 'font-semibold dark:text-zinc-300 text-lg' }}
 						/>
 					}

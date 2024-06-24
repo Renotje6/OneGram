@@ -1,9 +1,18 @@
 'use client';
 
 import Post from '@/components/post';
+import { auth } from '@/config/firebase';
 import MainLayout from '@/layouts/MainLayout';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
+	const router = useRouter();
+
+	if (!auth.currentUser) {
+		router.push('/login');
+		return;
+	}
+
 	return (
 		<MainLayout>
 			<div className='flex items-center mt-5 flex-col gap-5'>

@@ -1,7 +1,9 @@
 'use client';
 
+import { useUser } from '@/components/contexts/userContext';
 import ProfileGallery from '@/components/profile/gallery';
 import ProfileHeader from '@/components/profile/header';
+import { auth } from '@/config/firebase';
 import MainLayout from '@/layouts/MainLayout';
 
 const images = [
@@ -32,11 +34,13 @@ const images = [
 ];
 
 export default function AccountPage() {
+	const { user } = useUser();
+
 	return (
 		<MainLayout>
 			<ProfileHeader
-				name='Username'
-				avatar=''
+				name={user.name}
+				avatar={auth.currentUser?.photoURL || ''}
 				bio='Profile BIO'
 			/>
 			<div className='w-full flex flex-col items-center p-10'>

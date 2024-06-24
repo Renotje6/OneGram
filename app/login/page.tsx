@@ -9,7 +9,7 @@ import { collection, doc, getDoc, setDoc } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
-import { useUser } from '../contexts/userContext';
+import { useUser } from '../../components/contexts/userContext';
 
 export default function LoginPage() {
 	const [email, setEmail] = useState('');
