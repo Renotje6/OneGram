@@ -1,13 +1,104 @@
 'use client';
 
+import { auth, db, googleProvider } from '@/config/firebase';
 import LoginLayout from '@/layouts/LoginLayout';
-import { Button, Divider, Input, Spinner } from '@nextui-org/react';
+import { collection, doc, getDoc, setDoc } from '@firebase/firestore';
+import { FirebaseError } from '@firebase/util';
+import { Button, Divider, Input } from '@nextui-org/react';
+import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
+import { useUser } from '../contexts/userContext';
 
-export default function LoginPage() {
-	const handleLogin = () => {
-		console.log('Login');
+export default function RegisterPage() {
+	const [name, setName] = useState('');
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const [error, setError] = useState('');
+
+	const { setUser } = useUser();
+
+	const router = useRouter();
+
+	const signUpWithEmailAndPassword = async () => {
+		const userCollection = collection(db, 'users');
+
+		try {
+			const authUser = await createUserWithEmailAndPassword(auth, email, password);
+
+			await setDoc(doc(userCollection, authUser.user.uid), {
+				uid: authUser.user.uid,
+				name,
+				email,
+				friends: [],
+			});
+
+			setUser({
+				uid: authUser.user.uid,
+				name,
+				email,
+			});
+
+			router.push('/');
+		} catch (e: any) {
+			if (e instanceof FirebaseError) {
+				switch (e.code) {
+					case 'auth/email-already-in-use':
+						setError('Email already in use');
+						break;
+					case 'auth/weak-password':
+						setError('Weak password');
+						break;
+					default:
+						setError('An error occurred');
+						console.error(e);
+						break;
+				}
+			} else {
+				setError(e.message);
+				console.error(error);
+			}
+			console.log(auth.currentUser);
+			alert(error);
+		}
 	};
+
+	const signUpWithGoogle = async () => {
+		try {
+			const user = await signInWithPopup(auth, googleProvider);
+			const userCollection = collection(db, 'users');
+			const userDocRef = doc(userCollection, user.user.uid);
+			const userDocSnap = await getDoc(userDocRef);
+
+			if (!userDocSnap.exists()) {
+				setDoc(userDocRef, {
+					uid: user.user.uid,
+					name: user.user.displayName,
+					email: user.user.email,
+					friends: [],
+				});
+			}
+
+			setUser({
+				uid: user.user.uid,
+				name: user.user.displayName || user.user.email || user.user.uid,
+				email: user.user.email!,
+			});
+
+			router.push('/');
+		} catch (e: any) {
+			setError(e.message);
+			console.error(error);
+
+			alert(e.message);
+		}
+	};
+
+	if (auth.currentUser) {
+		console.log(auth.currentUser);
+		// router.push('/');
+	}
 
 	return (
 		<LoginLayout>
@@ -28,13 +119,30 @@ export default function LoginPage() {
 					<h1 className='font-semibold text-4xl text-center hidden md:block'>Register</h1>
 					<h1 className='text-5xl font-semibold md:hidden text-center'>OneGram</h1>
 					<div className='flex flex-col items-center gap-2'>
-						<Input placeholder='Name' />
-						<Input placeholder='Email' />
-						<Input placeholder='Password' />
+						<Input
+							placeholder='Name'
+							onChange={(e) => {
+								setName(e.target.value);
+							}}
+						/>
+						<Input
+							placeholder='Email'
+							onChange={(e) => {
+								setEmail(e.target.value);
+							}}
+						/>
+						<Input
+							placeholder='Password'
+							type='password'
+							onChange={(e) => {
+								setPassword(e.target.value);
+							}}
+						/>
+						{error && <div className='w-full bg-red-200 text-red-800 p-3 rounded-md'>{error}</div>}
 						<Button
 							color='primary'
 							className='w-full'
-							onClick={handleLogin}>
+							onClick={signUpWithEmailAndPassword}>
 							Register
 						</Button>
 					</div>
@@ -44,6 +152,7 @@ export default function LoginPage() {
 						<Button
 							isIconOnly
 							startContent={<FcGoogle className='size-6' />}
+							onClick={signUpWithGoogle}
 						/>
 					</div>
 				</div>

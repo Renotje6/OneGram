@@ -1,6 +1,7 @@
 import { NextUIProvider } from '@nextui-org/react';
-import { FC, ReactNode } from 'react';
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
+import { FC, ReactNode } from 'react';
+import { UserProvider } from './contexts/userContext';
 
 interface Props {
 	children: ReactNode;
@@ -12,7 +13,7 @@ const Providers: FC<Props> = ({ children }) => {
 			<NextThemesProvider
 				attribute='class'
 				defaultTheme='dark'>
-				{children}
+				<UserProvider>{children}</UserProvider>
 			</NextThemesProvider>
 		</NextUIProvider>
 	);
