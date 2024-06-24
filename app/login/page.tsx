@@ -30,6 +30,14 @@ export default function LoginPage() {
 
 				const userDocSnap = await getDoc(userDocRef);
 
+				if (userDocSnap.exists()) {
+					setUser({
+						uid: auth.currentUser.uid,
+						name: userDocSnap.data().name,
+						email: userDocSnap.data().email,
+					});
+				}
+
 				router.push('/dashboard');
 			}
 		} catch (e: any) {
@@ -69,6 +77,12 @@ export default function LoginPage() {
 					friends: [],
 				});
 			}
+
+			setUser({
+				uid: user.user.uid,
+				name: user.user.displayName || user.user.email || user.user.uid,
+				email: user.user.email!,
+			});
 
 			router.push('/');
 		} catch (e: any) {

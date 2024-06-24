@@ -1,13 +1,16 @@
-import { UserCredential } from 'firebase/auth';
+'use client';
+
 import React, { createContext, useContext } from 'react';
 
-interface UserType extends UserCredential {
+interface UserType {
+	uid: string;
 	name: string;
+	email: string;
 }
 
 interface UserContext {
-	user: UserType | null;
-	setUser: (user: UserType | null) => void;
+	user: UserType;
+	setUser: (user: UserType) => void;
 }
 
 const UserContext = createContext<UserContext>({} as UserContext);
@@ -17,7 +20,7 @@ interface UserProviderProps {
 }
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-	const [user, setUser] = React.useState<UserType | null>(null);
+	const [user, setUser] = React.useState<UserType>({} as UserType);
 
 	return <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>;
 };

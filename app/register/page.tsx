@@ -35,8 +35,9 @@ export default function RegisterPage() {
 			});
 
 			setUser({
-				...authUser,
+				uid: authUser.user.uid,
 				name,
+				email,
 			});
 
 			router.push('/');
@@ -80,8 +81,9 @@ export default function RegisterPage() {
 			}
 
 			setUser({
-				...user,
+				uid: user.user.uid,
 				name: user.user.displayName || user.user.email || user.user.uid,
+				email: user.user.email!,
 			});
 
 			router.push('/');
