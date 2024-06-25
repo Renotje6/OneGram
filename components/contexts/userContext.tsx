@@ -40,8 +40,8 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 	}
 
 	useEffect(() => {
-		if (auth.currentUser) getUser();
-	});
+		if (auth.currentUser && !user) getUser();
+	}, [user]);
 
 	return <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>;
 };

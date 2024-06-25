@@ -54,6 +54,7 @@ export default function LoginPage() {
 						break;
 					default:
 						setError('An error occurred');
+						console.error(e);
 						break;
 				}
 			}
@@ -94,6 +95,7 @@ export default function LoginPage() {
 	};
 
 	if (auth.currentUser) {
+		console.log('logged in');
 		router.push('/');
 	}
 
