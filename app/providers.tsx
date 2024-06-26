@@ -1,4 +1,5 @@
 import { UserProvider } from '@/components/contexts/userContext';
+import { ModalsProvider } from '@/hooks/useModals';
 import { NextUIProvider } from '@nextui-org/react';
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import { FC, ReactNode } from 'react';
@@ -13,7 +14,9 @@ const Providers: FC<Props> = ({ children }) => {
 			<NextThemesProvider
 				attribute='class'
 				defaultTheme='dark'>
-				<UserProvider>{children}</UserProvider>
+				<UserProvider>
+					<ModalsProvider>{children}</ModalsProvider>
+				</UserProvider>
 			</NextThemesProvider>
 		</NextUIProvider>
 	);
