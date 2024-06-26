@@ -17,12 +17,16 @@ export default function Home() {
 
 		// fetch posts
 		const fetchPosts = async () => {
+			const currentUser = await getDoc(doc(collection(db, 'users'), user.uid));
 			const postCollection = collection(db, 'posts/');
 			const postsSnapshot = await getDocs(postCollection);
 
 			let posts = postsSnapshot.docs.map((doc) => {
 				return { id: doc.id, ...doc.data() };
-			});
+			}) as Post[];
+
+			// Filter posts to only include posts from people the user follows
+			posts = posts.filter((post) => currentUser.data()!.friends.length > 0 && currentUser.data()!.friends.includes(post.owner));
 
 			const storage = getStorage();
 
@@ -80,7 +84,7 @@ export default function Home() {
 						/>
 					))
 				) : (
-					<p>No posts found</p>
+					<p>No posts found, start following people!</p>
 				)}
 			</div>
 		</MainLayout>
