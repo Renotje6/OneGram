@@ -1,5 +1,7 @@
 import { Avatar, Button } from '@nextui-org/react';
 import { FaPlus } from 'react-icons/fa';
+import CreatePostModal from '../modals/createPost';
+import { useModals } from '@/hooks/useModals';
 
 interface ProfileHeaderProps {
 	name: string;
@@ -8,6 +10,8 @@ interface ProfileHeaderProps {
 }
 
 export default function ProfileHeader({ name, bio, avatar }: ProfileHeaderProps) {
+	const { toggleModal, isModalOpen } = useModals();
+
 	return (
 		<header className='bg-black/10 flex p-10 relative'>
 			<div className='flex gap-5 items-center'>
@@ -36,10 +40,15 @@ export default function ProfileHeader({ name, bio, avatar }: ProfileHeaderProps)
 			<Button
 				isIconOnly
 				onClick={() => {
-					alert('Add post');
+					toggleModal('createPost');
 				}}
 				className='absolute top-8 right-8'
 				startContent={<FaPlus />}
+			/>
+
+			<CreatePostModal
+				isOpen={isModalOpen('createPost')}
+				modalToggle={() => toggleModal('createPost')}
 			/>
 		</header>
 	);
