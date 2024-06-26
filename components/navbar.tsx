@@ -4,6 +4,7 @@ import { FC } from 'react';
 import { FaHome, FaUserCircle } from 'react-icons/fa';
 import { FaGear } from 'react-icons/fa6';
 import { IoMdAddCircleOutline } from 'react-icons/io';
+import { IoSearch } from 'react-icons/io5';
 
 interface NavBarProps {}
 
@@ -22,6 +23,11 @@ const NavBar: FC<NavBarProps> = ({}) => {
 						icon={<IoMdAddCircleOutline className='size-6 dark:text-zinc-300' />}
 						label='CREATE'
 						href='/create'
+					/>
+					<NavButton
+					icon={<IoSearch className='size-6 dark:text-zinc-300' />}
+					label='SEARCH'
+					href='/search'
 					/>
 				</div>
 				<div className='h-fit flex gap-2 flex-col'>
