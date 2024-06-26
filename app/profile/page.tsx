@@ -21,7 +21,9 @@ export default function AccountPage() {
 			const q = query(postsCollection, where('owner', '==', auth.currentUser?.uid));
 			const postsSnapshot = await getDocs(q);
 
-			const posts = postsSnapshot.docs.map((doc) => doc.data());
+			const posts = postsSnapshot.docs.map((doc) => {
+				return { id: doc.id, ...doc.data() };
+			});
 			const storage = getStorage();
 			// map posts to include the url of the image
 			const postsWithImages = await Promise.all(

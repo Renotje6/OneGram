@@ -1,4 +1,5 @@
 interface Post {
+	id: string;
 	owner: string;
 	title: string;
 	description: string;

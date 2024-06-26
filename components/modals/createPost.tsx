@@ -45,7 +45,7 @@ const CreatePostModal: FC<ModalLoginProps> = ({ isOpen, modalToggle }) => {
 					description: formData.description,
 					picture: snapshot.metadata.fullPath,
 					userId: auth.currentUser?.uid,
-					timestamp: Date.now(),
+					timestamp: new Date().toISOString(),
 					likes: [],
 					comments: [],
 				});
