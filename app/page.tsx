@@ -1,5 +1,6 @@
 'use client';
 
+import { useUser } from '@/components/contexts/userContext';
 import Post from '@/components/post';
 import { db } from '@/config/firebase';
 import MainLayout from '@/layouts/MainLayout';
@@ -9,8 +10,11 @@ import { useEffect, useState } from 'react';
 
 export default function Home() {
 	const [posts, setPosts] = useState<any>([]);
+	const { user } = useUser();
 
 	useEffect(() => {
+		if (!user) return;
+
 		// fetch posts
 		const fetchPosts = async () => {
 			const postCollection = collection(db, 'posts/');
@@ -39,9 +43,9 @@ export default function Home() {
 			posts = await Promise.all(
 				posts.map(async (post: any) => {
 					const userDoc = await getDoc(doc(collection(db, 'users'), post.owner));
-					const user = userDoc.data();
+					const userRef = userDoc.data();
 
-					if (!user) {
+					if (!userRef) {
 						return {
 							...post,
 							user: {
@@ -53,7 +57,7 @@ export default function Home() {
 					return {
 						...post,
 						user: {
-							name: user.name,
+							name: userRef.name,
 						},
 					};
 				})
@@ -63,7 +67,7 @@ export default function Home() {
 		};
 
 		fetchPosts();
-	}, []);
+	}, [user]);
 
 	return (
 		<MainLayout>

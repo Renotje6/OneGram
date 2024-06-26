@@ -31,6 +31,11 @@ export default function LoginPage() {
 				const userDocSnap = await getDoc(userDocRef);
 
 				if (userDocSnap.exists()) {
+					setDoc(userDocRef, {
+						...userDocSnap.data(),
+						lastSeen: new Date().toISOString(),
+					});
+
 					setUser({
 						uid: auth.currentUser.uid,
 						name: userDocSnap.data().name,
@@ -76,6 +81,12 @@ export default function LoginPage() {
 					name: user.user.displayName,
 					email: user.user.email,
 					friends: [],
+					lastSeen: new Date().toISOString(),
+				});
+			} else {
+				setDoc(userDocRef, {
+					...userDocSnap.data(),
+					lastSeen: new Date().toISOString(),
 				});
 			}
 

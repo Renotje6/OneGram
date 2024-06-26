@@ -13,7 +13,7 @@ export default function ProfileGallery({ posts }: ProfileGalleryProps) {
 			{posts.map((post, index) => (
 				<Image
 					onClick={() => {
-						router.push(`/profile/${post.id}`);
+						router.push(`/profile/posts/${post.id}`);
 					}}
 					className='rounded-xl gap-2 hover:cursor-pointer'
 					key={index}

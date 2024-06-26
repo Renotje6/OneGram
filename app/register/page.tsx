@@ -32,6 +32,7 @@ export default function RegisterPage() {
 				name,
 				email,
 				friends: [],
+				lastSeen: new Date().toISOString(),
 			});
 
 			setUser({
@@ -75,6 +76,7 @@ export default function RegisterPage() {
 					name: user.user.displayName,
 					email: user.user.email,
 					friends: [],
+					lastSeen: new Date().toISOString(),
 				});
 			}
 

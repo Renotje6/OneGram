@@ -32,7 +32,7 @@ const SideBar: FC<SideBarProps> = ({}) => {
 							following
 							id='jane-doe'
 							name='Jane Doe'
-							lastseen='5h ago'
+							lastSeen='5h ago'
 							image='https://i.pravatar.cc/150?u=a04258114e29026702d'
 						/>
 					</div>
@@ -62,11 +62,11 @@ interface SideBarUserProps {
 	id: string;
 	name: string;
 	following: boolean;
-	lastseen?: string;
+	lastSeen?: string;
 	image: string;
 }
 
-const SideBarUser: FC<SideBarUserProps> = ({ id, name, following, image, lastseen }) => {
+const SideBarUser: FC<SideBarUserProps> = ({ id, name, following, image, lastSeen }) => {
 	return (
 		<Button
 			as={Link}
@@ -78,7 +78,7 @@ const SideBarUser: FC<SideBarUserProps> = ({ id, name, following, image, lastsee
 			startContent={
 				<User
 					name={name}
-					description={lastseen}
+					description={lastSeen}
 					avatarProps={{ src: image, showFallback: true }}
 					classNames={{ description: 'text-zinc-500', name: 'font-semibold dark:text-zinc-300' }}
 				/>
