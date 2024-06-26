@@ -57,33 +57,6 @@ const CreatePostModal: FC<ModalLoginProps> = ({ isOpen, modalToggle }) => {
 		}
 	};
 
-	// const uploadPost = async () => {
-	// 	// if (!title || !description || !picture) return;
-
-	// 	const storage = getStorage();
-	// 	const storageRef = ref(storage, `posts/${auth.currentUser?.uid}/${picture.name}_${Date.now()}`);
-
-	// 	try {
-	// 		const snapshot = await uploadBytes(storageRef, picture);
-
-	// 		await setDoc(doc(db, `posts/`, `${auth.currentUser?.uid}_${Date.now()}`), {
-	// 			owner: auth.currentUser?.uid,
-	// 			title,
-	// 			description,
-	// 			picture: snapshot.metadata.fullPath,
-	// 			userId: auth.currentUser?.uid,
-	// 			timestamp: Date.now(),
-	// 			likes: [],
-	// 			comments: [],
-	// 		});
-
-	// 		alert('Post uploaded successfully');
-	// 	} catch (error: any) {
-	// 		console.error(error);
-	// 		alert(`Failed to upload post\n${error.message}`);
-	// 	}
-	// };
-
 	return (
 		<Modal
 			classNames={{ base: 'bg-black/20 dark:bg-black/50 rounded-lg', header: 'font-K2D flex justify-center text-white', body: 'gap-2', footer: 'flex justify-center flex-col' }}
@@ -117,13 +90,13 @@ const CreatePostModal: FC<ModalLoginProps> = ({ isOpen, modalToggle }) => {
 							<input
 								type='file'
 								accept='image/*'
-								isClearable
-								size='sm'
-								isRequired
-								label='Image'
-								isInvalid={!!errors.image}
-								errorMessage={errors.image?.message?.toString()}
-								{...register('image', { required: 'Image is required' })}
+								// isClearable
+								// size='sm'
+								// isRequired
+								// label='Image'
+								// isInvalid={!!errors.image}
+								// errorMessage={errors.image?.message?.toString()}
+								// {...register('image', { required: 'Image is required' })}
 							/>
 						</div>
 					</ModalBody>
