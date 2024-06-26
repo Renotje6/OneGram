@@ -4,30 +4,14 @@ import ProfileGallery from '@/components/profile/gallery';
 import ProfileHeader from '@/components/profile/header';
 import MainLayout from '@/layouts/MainLayout';
 
-const images = [
+const posts = [
 	{
-		src: '/placeholder.png',
-		alt: 'Image 1',
+		id: '1',
+		image: '/placeholder.png',
 	},
 	{
-		src: '/placeholder.png',
-		alt: 'Image 2',
-	},
-	{
-		src: '/placeholder.png',
-		alt: 'Image 2',
-	},
-	{
-		src: '/placeholder.png',
-		alt: 'Image 3',
-	},
-	{
-		src: '/placeholder.png',
-		alt: 'Image 4',
-	},
-	{
-		src: '/placeholder.png',
-		alt: 'Image 4',
+		id: '2',
+		image: '/placeholder.png',
 	},
 ];
 
@@ -40,7 +24,7 @@ export default function AccountPage() {
 				bio='Profile BIO'
 			/>
 			<div className='w-full flex flex-col items-center p-10'>
-				<ProfileGallery images={images} />
+				<ProfileGallery posts={posts} />
 			</div>
 		</MainLayout>
 	);
