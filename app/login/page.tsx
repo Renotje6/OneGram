@@ -43,7 +43,7 @@ export default function LoginPage() {
 					});
 				}
 
-				router.push('/dashboard');
+				router.push('/');
 			}
 		} catch (e: any) {
 			if (e instanceof FirebaseError) {

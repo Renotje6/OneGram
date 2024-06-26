@@ -15,10 +15,11 @@ export default function AccountPage() {
 	const [posts, setPosts] = useState<Post[]>([]);
 
 	useEffect(() => {
+		if (!user) return;
 		const fetchPosts = async () => {
 			const postsCollection = collection(db, `posts/`);
 			// query where post id contains the current user id
-			const q = query(postsCollection, where('owner', '==', auth.currentUser?.uid));
+			const q = query(postsCollection, where('owner', '==', user.uid));
 			const postsSnapshot = await getDocs(q);
 
 			const posts = postsSnapshot.docs.map((doc) => {
@@ -43,7 +44,7 @@ export default function AccountPage() {
 		};
 
 		fetchPosts();
-	}, []);
+	}, [user]);
 
 	return (
 		<MainLayout>

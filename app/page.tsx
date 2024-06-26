@@ -4,7 +4,7 @@ import { useUser } from '@/components/contexts/userContext';
 import Post from '@/components/post';
 import { db } from '@/config/firebase';
 import MainLayout from '@/layouts/MainLayout';
-import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
 import { getDownloadURL, getStorage, ref } from 'firebase/storage';
 import { useEffect, useState } from 'react';
 
@@ -73,6 +73,38 @@ export default function Home() {
 		fetchPosts();
 	}, [user]);
 
+	const likePost = async (id: string) => {
+		const postRef = doc(collection(db, 'posts'), id);
+		const postDoc = await getDoc(postRef);
+		const post = postDoc.data();
+
+		if (!post) return;
+
+		const likes = post.likes;
+		const userIndex = likes.indexOf(user?.uid);
+
+		if (userIndex === -1) {
+			likes.push(user?.uid);
+		} else {
+			likes.splice(userIndex, 1);
+		}
+
+		await setDoc(postRef, { ...post, likes });
+
+		setPosts((prevPosts: any) =>
+			prevPosts.map((prevPost: any) => {
+				if (prevPost.id === id) {
+					return {
+						...prevPost,
+						likes,
+					};
+				}
+
+				return prevPost;
+			})
+		);
+	};
+
 	return (
 		<MainLayout>
 			<div className='flex items-center mt-5 flex-col gap-5'>
@@ -81,6 +113,8 @@ export default function Home() {
 						<Post
 							key={post.id}
 							{...post}
+							liked={post.likes.includes(user?.uid)}
+							like={() => likePost(post.id)}
 						/>
 					))
 				) : (
