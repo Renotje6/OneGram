@@ -39,37 +39,20 @@ const SideBar: FC<SideBarProps> = ({}) => {
 				</div>
 				<div>
 					<Button
-						as={Link}
 						size='lg'
 						variant='light'
-						href={`/logout`}
+						onClick={logout}
 						className='flex justify-between w-full items-center p-2 text-black dark:text-zinc-300'
 						endContent={<TbLogout className='size-6 dark:text-zinc-400' />}
 						startContent={
 							<User
-								name='Logout'
-								avatarProps={{ src: '', showFallback: true }}
+								name={user?.name || 'User'}
+								avatarProps={{ src: auth.currentUser?.photoURL || '', showFallback: true }}
 								classNames={{ description: 'text-zinc-500', name: 'font-semibold dark:text-zinc-300 text-lg' }}
 							/>
 						}
 					/>
 				</div>
-			</div>
-			<div>
-				<Button
-					size='lg'
-					variant='light'
-					onClick={logout}
-					className='flex justify-between w-full items-center p-2 text-black dark:text-zinc-300'
-					endContent={<TbLogout className='size-6 dark:text-zinc-400' />}
-					startContent={
-						<User
-							name={user?.name || 'User'}
-							avatarProps={{ src: auth.currentUser?.photoURL || '', showFallback: true }}
-							classNames={{ description: 'text-zinc-500', name: 'font-semibold dark:text-zinc-300 text-lg' }}
-						/>
-					}
-				/>
 			</div>
 		</nav>
 	);
