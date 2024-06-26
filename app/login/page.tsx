@@ -94,11 +94,6 @@ export default function LoginPage() {
 		}
 	};
 
-	if (auth.currentUser) {
-		console.log('logged in');
-		router.push('/');
-	}
-
 	return (
 		<LoginLayout>
 			<div className='bg-black/10 flex w-[90%] md:w-[600px] h-[400px] rounded-xl'>

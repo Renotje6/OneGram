@@ -9,13 +9,6 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 import { getDownloadURL, getStorage, ref } from 'firebase/storage';
 import { useEffect, useState } from 'react';
 
-const images = [
-	{ src: '/placeholder.png', alt: 'Image 1' },
-	{ src: '/placeholder.png', alt: 'Image 2' },
-	{ src: '/placeholder.png', alt: 'Image 3' },
-	{ src: '/placeholder.png', alt: 'Image 4' },
-];
-
 export default function AccountPage() {
 	const { user } = useUser();
 
