@@ -9,9 +9,11 @@ interface PostProps {
 	title: string;
 	user: {
 		name: string;
-		avatar: string;
 	};
-	image: string;
+	image: {
+		src: string;
+		alt: string;
+	};
 	description: string;
 	comments: {
 		user: {
@@ -34,14 +36,14 @@ export default function Post({ title, user, image, description, comments }: Post
 						avatarProps={{
 							size: 'md',
 							showFallback: true,
-							src: user.avatar,
+							name: user.name,
 						}}
 					/>
 				</div>
 				<Image
 					className='rounded-lg'
-					src={image ?? 'placeholder.png'}
-					alt={title}
+					src={image.src ?? 'placeholder.png'}
+					alt={image.alt}
 					width={500}
 					height={200}
 				/>

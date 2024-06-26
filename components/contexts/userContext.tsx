@@ -3,7 +3,7 @@
 import { auth, db } from '@/config/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { collection, doc, getDoc } from 'firebase/firestore';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import React, { createContext, useContext, useEffect } from 'react';
 
 interface UserType {
@@ -26,39 +26,40 @@ interface UserProviderProps {
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 	const [user, setUser] = React.useState<UserType | null>(null);
 	const router = useRouter();
-
-	async function getUser() {
-		if (auth.currentUser) {
-			const userCollection = collection(db, 'users');
-			const userDocRef = doc(userCollection, auth.currentUser.uid);
-
-			const userDocSnap = await getDoc(userDocRef);
-
-			if (userDocSnap.exists()) {
-				setUser({
-					uid: auth.currentUser.uid,
-					name: userDocSnap.data().name,
-					email: userDocSnap.data().email,
-				});
-			} else {
-				console.error('No such document!');
-			}
-		}
-	}
+	const pathname = usePathname();
 
 	useEffect(() => {
+		async function getUser() {
+			if (auth.currentUser) {
+				const userCollection = collection(db, 'users');
+				const userDocRef = doc(userCollection, auth.currentUser.uid);
+
+				const userDocSnap = await getDoc(userDocRef);
+
+				if (userDocSnap.exists()) {
+					setUser({
+						uid: auth.currentUser.uid,
+						name: userDocSnap.data().name,
+						email: userDocSnap.data().email,
+					});
+				} else {
+					auth.signOut();
+					router.push('/login');
+				}
+			}
+		}
 		const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
 			if (authUser) {
 				await getUser();
 			} else {
 				setUser(null);
-				router.push('/login');
+				if (pathname !== '/login' && pathname !== '/register') router.push('/login');
 			}
 		});
 
 		// Cleanup subscription on unmount
 		return () => unsubscribe();
-	}, [router]);
+	}, [router, pathname]);
 
 	return <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>;
 };
