@@ -1,7 +1,9 @@
 'use client';
 
 import { auth, db } from '@/config/firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 import { collection, doc, getDoc } from 'firebase/firestore';
+import { useRouter } from 'next/navigation';
 import React, { createContext, useContext, useEffect } from 'react';
 
 interface UserType {
@@ -11,8 +13,8 @@ interface UserType {
 }
 
 interface UserContext {
-	user: UserType;
-	setUser: (user: UserType) => void;
+	user: UserType | null;
+	setUser: (user: UserType | null) => void;
 }
 
 const UserContext = createContext<UserContext>({} as UserContext);
@@ -22,26 +24,41 @@ interface UserProviderProps {
 }
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-	const [user, setUser] = React.useState<UserType>({} as UserType);
+	const [user, setUser] = React.useState<UserType | null>(null);
+	const router = useRouter();
 
 	async function getUser() {
-		const userCollection = collection(db, 'users');
-		const userDocRef = doc(userCollection, auth.currentUser!.uid);
+		if (auth.currentUser) {
+			const userCollection = collection(db, 'users');
+			const userDocRef = doc(userCollection, auth.currentUser.uid);
 
-		const userDocSnap = await getDoc(userDocRef);
+			const userDocSnap = await getDoc(userDocRef);
 
-		if (userDocSnap.exists()) {
-			setUser({
-				uid: auth.currentUser!.uid,
-				name: userDocSnap.data().name,
-				email: userDocSnap.data().email,
-			});
+			if (userDocSnap.exists()) {
+				setUser({
+					uid: auth.currentUser.uid,
+					name: userDocSnap.data().name,
+					email: userDocSnap.data().email,
+				});
+			} else {
+				console.error('No such document!');
+			}
 		}
 	}
 
 	useEffect(() => {
-		if (auth.currentUser && !user) getUser();
-	}, [user]);
+		const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
+			if (authUser) {
+				await getUser();
+			} else {
+				setUser(null);
+				router.push('/login');
+			}
+		});
+
+		// Cleanup subscription on unmount
+		return () => unsubscribe();
+	}, [router]);
 
 	return <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>;
 };

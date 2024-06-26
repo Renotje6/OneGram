@@ -6,7 +6,7 @@ import ProfileHeader from '@/components/profile/header';
 import { auth, db } from '@/config/firebase';
 import MainLayout from '@/layouts/MainLayout';
 import { Button, Input } from '@nextui-org/react';
-import { collection, doc, getDocs, setDoc } from 'firebase/firestore';
+import { collection, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import { useEffect, useState } from 'react';
 
@@ -35,7 +35,8 @@ export default function AccountPage() {
 		try {
 			const snapshot = await uploadBytes(storageRef, picture);
 
-			await setDoc(doc(db, `posts/${auth.currentUser?.uid}/posts`, `${auth.currentUser?.uid}_${Date.now()}`), {
+			await setDoc(doc(db, `posts/`, `${auth.currentUser?.uid}_${Date.now()}`), {
+				owner: auth.currentUser?.uid,
 				title,
 				description,
 				picture: snapshot.metadata.fullPath,
@@ -59,9 +60,10 @@ export default function AccountPage() {
 
 	useEffect(() => {
 		const fetchPosts = async () => {
-			const postsCollection = collection(db, `posts/${auth.currentUser?.uid}/posts`);
+			const postsCollection = collection(db, `posts/`);
 			// query where post id contains the current user id
-			const postsSnapshot = await getDocs(postsCollection);
+			const q = query(postsCollection, where('owner', '==', auth.currentUser?.uid));
+			const postsSnapshot = await getDocs(q);
 
 			const posts = postsSnapshot.docs.map((doc) => doc.data());
 			const storage = getStorage();
@@ -90,7 +92,7 @@ export default function AccountPage() {
 	return (
 		<MainLayout>
 			<ProfileHeader
-				name={user.name}
+				name={user?.name || 'User'}
 				avatar={auth.currentUser?.photoURL || ''}
 				bio='Profile BIO'
 			/>

@@ -3,6 +3,7 @@
 import { auth } from '@/config/firebase';
 import { Button, User } from '@nextui-org/react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { FC } from 'react';
 import { MdLibraryAdd } from 'react-icons/md';
 import { TbLogout } from 'react-icons/tb';
@@ -12,6 +13,14 @@ interface SideBarProps {}
 
 const SideBar: FC<SideBarProps> = ({}) => {
 	const { user } = useUser();
+
+	const router = useRouter();
+
+	const logout = () => {
+		auth.signOut().then(() => {
+			router.push('/login');
+		});
+	};
 
 	return (
 		<nav className='bg-black/20 text-black p-4 min-h-screen w-80 flex-col gap-5 justify-between shadow-lg hidden lg:flex min-w-80 fixed right-0'>
@@ -29,15 +38,14 @@ const SideBar: FC<SideBarProps> = ({}) => {
 			</div>
 			<div>
 				<Button
-					as={Link}
 					size='lg'
 					variant='light'
-					href={`/logout`}
+					onClick={logout}
 					className='flex justify-between w-full items-center p-2 text-black dark:text-zinc-300'
 					endContent={<TbLogout className='size-6 dark:text-zinc-400' />}
 					startContent={
 						<User
-							name={user.name}
+							name={user?.name || 'User'}
 							avatarProps={{ src: auth.currentUser?.photoURL || '', showFallback: true }}
 							classNames={{ description: 'text-zinc-500', name: 'font-semibold dark:text-zinc-300 text-lg' }}
 						/>
