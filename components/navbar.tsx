@@ -8,6 +8,7 @@ import { IoSearch } from 'react-icons/io5';
 
 interface NavBarProps {}
 
+
 const NavBar: FC<NavBarProps> = ({}) => {
 	return (
 		<nav className='bg-black/20 text-black min-h-screen w-80 flex-col gap-5 justify-between shadow-lg hidden lg:flex min-w-80'>
@@ -24,6 +25,7 @@ const NavBar: FC<NavBarProps> = ({}) => {
 						label='CREATE'
 						href='/create'
 					/>
+					
 					<NavButton
 					icon={<IoSearch className='size-6 dark:text-zinc-300' />}
 					label='SEARCH'

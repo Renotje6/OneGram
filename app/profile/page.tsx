@@ -51,12 +51,7 @@ export default function AccountPage() {
 				bio='Profile BIO'
 			/>
 			<div className='w-full flex flex-col items-center p-10'>
-				<ProfileGallery
-					images={posts.map((post: any) => {
-						console.dir(post, { depth: null });
-						return post.image;
-					})}
-				/>
+				<ProfileGallery posts={posts} />
 			</div>
 		</MainLayout>
 	);

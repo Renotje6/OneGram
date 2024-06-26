@@ -1,18 +1,24 @@
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 interface ProfileGalleryProps {
-	images: { src: string; alt: string }[];
+	posts: { image: string; id: string }[];
 }
 
-export default function ProfileGallery({ images }: ProfileGalleryProps) {
+export default function ProfileGallery({ posts }: ProfileGalleryProps) {
+	const router = useRouter();
+
 	return (
 		<div className='flex flex-wrap justify-center items-center gap-5'>
-			{images.map((image, index) => (
+			{posts.map((post, index) => (
 				<Image
-					className='rounded-xl gap-2'
+					onClick={() => {
+						router.push(`/profile/${post.id}`);
+					}}
+					className='rounded-xl gap-2 hover:cursor-pointer'
 					key={index}
-					src={image.src}
-					alt={image.alt}
+					src={post.image}
+					alt='Post Image'
 					width={300}
 					height={150}
 				/>
