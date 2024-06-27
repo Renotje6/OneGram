@@ -1,5 +1,6 @@
 'use client';
 
+import { useUser } from '@/components/contexts/userContext';
 import { auth, db, googleProvider } from '@/config/firebase';
 import LoginLayout from '@/layouts/LoginLayout';
 import { collection, doc, getDoc, setDoc } from '@firebase/firestore';
@@ -9,7 +10,6 @@ import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
-import { useUser } from '../contexts/userContext';
 
 export default function RegisterPage() {
 	const [name, setName] = useState('');
@@ -32,6 +32,7 @@ export default function RegisterPage() {
 				name,
 				email,
 				friends: [],
+				lastSeen: new Date().toISOString(),
 			});
 
 			setUser({
@@ -59,8 +60,6 @@ export default function RegisterPage() {
 				setError(e.message);
 				console.error(error);
 			}
-			console.log(auth.currentUser);
-			alert(error);
 		}
 	};
 
@@ -77,6 +76,7 @@ export default function RegisterPage() {
 					name: user.user.displayName,
 					email: user.user.email,
 					friends: [],
+					lastSeen: new Date().toISOString(),
 				});
 			}
 
@@ -90,14 +90,11 @@ export default function RegisterPage() {
 		} catch (e: any) {
 			setError(e.message);
 			console.error(error);
-
-			alert(e.message);
 		}
 	};
 
-	if (auth.currentUser) {
-		console.log(auth.currentUser);
-		// router.push('/');
+	if (auth.currentUser?.uid) {
+		router.push('/');
 	}
 
 	return (

@@ -9,7 +9,7 @@ import { collection, doc, getDoc, setDoc } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
-import { useUser } from '../contexts/userContext';
+import { useUser } from '../../components/contexts/userContext';
 
 export default function LoginPage() {
 	const [email, setEmail] = useState('');
@@ -31,6 +31,11 @@ export default function LoginPage() {
 				const userDocSnap = await getDoc(userDocRef);
 
 				if (userDocSnap.exists()) {
+					setDoc(userDocRef, {
+						...userDocSnap.data(),
+						lastSeen: new Date().toISOString(),
+					});
+
 					setUser({
 						uid: auth.currentUser.uid,
 						name: userDocSnap.data().name,
@@ -38,7 +43,7 @@ export default function LoginPage() {
 					});
 				}
 
-				router.push('/dashboard');
+				router.push('/');
 			}
 		} catch (e: any) {
 			if (e instanceof FirebaseError) {
@@ -54,6 +59,7 @@ export default function LoginPage() {
 						break;
 					default:
 						setError('An error occurred');
+						console.error(e);
 						break;
 				}
 			}
@@ -75,6 +81,12 @@ export default function LoginPage() {
 					name: user.user.displayName,
 					email: user.user.email,
 					friends: [],
+					lastSeen: new Date().toISOString(),
+				});
+			} else {
+				setDoc(userDocRef, {
+					...userDocSnap.data(),
+					lastSeen: new Date().toISOString(),
 				});
 			}
 
@@ -92,10 +104,6 @@ export default function LoginPage() {
 			alert(e.message);
 		}
 	};
-
-	if (auth.currentUser) {
-		router.push('/');
-	}
 
 	return (
 		<LoginLayout>

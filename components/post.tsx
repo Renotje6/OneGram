@@ -1,28 +1,33 @@
+'use client';
+
 import { Button, Textarea, User } from '@nextui-org/react';
 import Image from 'next/image';
 import { useState } from 'react';
-import { FaRegBookmark, FaRegHeart } from 'react-icons/fa';
+import { FaHeart, FaRegBookmark, FaRegHeart } from 'react-icons/fa';
 import { LuSend } from 'react-icons/lu';
 import { PiChatCircleTextBold } from 'react-icons/pi';
 
 interface PostProps {
+	id: string;
 	title: string;
 	user: {
 		name: string;
-		avatar: string;
 	};
-	image: string;
+	image: {
+		src: string;
+		alt: string;
+	};
 	description: string;
 	comments: {
-		user: {
-			name: string;
-			avatar: string;
-		};
+		userId: string;
 		comment: string;
 	}[];
+	likes: number;
+	liked: boolean;
+	like: () => void;
 }
 
-export default function Post({ title, user, image, description, comments }: PostProps) {
+export default function Post({ id, title, user, image, description, comments, likes, liked, like }: PostProps) {
 	const [openComments, setOpenComments] = useState(false);
 
 	return (
@@ -34,14 +39,14 @@ export default function Post({ title, user, image, description, comments }: Post
 						avatarProps={{
 							size: 'md',
 							showFallback: true,
-							src: user.avatar,
+							name: user.name,
 						}}
 					/>
 				</div>
 				<Image
 					className='rounded-lg'
-					src={image ?? 'placeholder.png'}
-					alt={title}
+					src={image.src ?? 'placeholder.png'}
+					alt={image.alt}
 					width={500}
 					height={200}
 				/>
@@ -59,7 +64,12 @@ export default function Post({ title, user, image, description, comments }: Post
 							size='lg'
 							radius='full'
 							variant='light'
-							startContent={<FaRegHeart className='size-9 text-pink-700' />}
+							startContent={liked ? <FaHeart className={`size-9 text-pink-700`} /> : <FaRegHeart className={`size-9 text-pink-700`} />}
+							onClick={(e) => {
+								e.stopPropagation();
+								e.preventDefault();
+								like();
+							}}
 						/>
 						<Button
 							isIconOnly
@@ -111,11 +121,11 @@ export default function Post({ title, user, image, description, comments }: Post
 									className='bg-white/5 p-2 rounded-lg'>
 									<User
 										classNames={{ name: 'text-zinc-300' }}
-										name={comment.user.name}
+										name={comment.userId}
 										avatarProps={{
 											size: 'sm',
 											showFallback: true,
-											src: comment.user.avatar,
+											name: comment.userId,
 										}}
 									/>
 									<p className='text-sm'>{comment.comment}</p>

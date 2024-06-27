@@ -1,8 +1,8 @@
+import { UserProvider } from '@/components/contexts/userContext';
+import { ModalsProvider } from '@/hooks/useModals';
 import { NextUIProvider } from '@nextui-org/react';
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import { FC, ReactNode } from 'react';
-import { UserProvider } from './contexts/userContext';
-import { ModalsProvider } from '@/hooks/useModals';
 
 interface Props {
 	children: ReactNode;

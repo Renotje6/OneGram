@@ -1,6 +1,9 @@
-import { ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Modal, Input, Textarea } from '@nextui-org/react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { auth, db } from '@/config/firebase';
+import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Textarea } from '@nextui-org/react';
+import { doc, setDoc } from 'firebase/firestore';
+import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import { FC } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 interface ModalLoginProps {
 	isOpen: boolean;
 	modalToggle: () => void;
@@ -9,7 +12,7 @@ interface ModalLoginProps {
 interface FormFields {
 	title: string;
 	description: string;
-	image: string;
+	image: FileList;
 }
 
 const CreatePostModal: FC<ModalLoginProps> = ({ isOpen, modalToggle }) => {
@@ -25,13 +28,30 @@ const CreatePostModal: FC<ModalLoginProps> = ({ isOpen, modalToggle }) => {
 		defaultValues: {
 			title: '',
 			description: '',
-			image: '',
 		},
 	});
 
 	const onSubmit: SubmitHandler<FormFields> = async (formData) => {
 		try {
-			console.log(formData);
+			const storage = getStorage();
+			const storageRef = ref(storage, `posts/${auth.currentUser?.uid}/${formData.image}_${Date.now()}`);
+
+			try {
+				const snapshot = await uploadBytes(storageRef, formData.image[0]);
+
+				await setDoc(doc(db, `posts/`, `${auth.currentUser?.uid}_${Date.now()}`), {
+					owner: auth.currentUser?.uid,
+					title: formData.title,
+					description: formData.description,
+					picture: snapshot.metadata.fullPath,
+					userId: auth.currentUser?.uid,
+					timestamp: new Date().toISOString(),
+					likes: [],
+					comments: [],
+				});
+			} catch (error: any) {
+				setError('root', { message: error.message });
+			}
 		} catch (error: any) {
 			setError('root', { message: error.message });
 		}
