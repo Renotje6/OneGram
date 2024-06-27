@@ -3,7 +3,7 @@
 import { useUser } from '@/components/contexts/userContext';
 import { db } from '@/config/firebase';
 import MainLayout from '@/layouts/MainLayout';
-import { Button, Link, User } from '@nextui-org/react';
+import { Button, Input, Link, User } from '@nextui-org/react';
 import { collection, doc, getDoc, getDocs, onSnapshot, query, setDoc, where } from 'firebase/firestore';
 import { FC, useEffect, useState } from 'react';
 import { IoIosAddCircle, IoIosRemoveCircle } from 'react-icons/io';
@@ -89,10 +89,11 @@ export default function AccountPage() {
 		<MainLayout>
 			<div className=' flex justify-center mt-5 text-5xl '>Search friends</div>
 			<div className='flex justify-center mt-5'>
-				<input
+				<Input
 					type='search'
+					variant='bordered'
 					placeholder='Search users...'
-					className='p-2 border rounded-lg w-1/2'
+					className='w-1/2'
 					onChange={(e) => {
 						setSearch(e.target.value);
 						e.target.value ? setFilteredUsers(users.filter((user) => user.name.toLowerCase().includes(e.target.value.toLowerCase()))) : setFilteredUsers(users.filter((user) => !currentUser.friends.includes(user.id)));
