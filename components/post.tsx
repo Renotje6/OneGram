@@ -36,6 +36,7 @@ export default function Post({ id, title, user, image, description, comments, li
 				<div className='absolute top-0 p-3'>
 					<User
 						name={user.name}
+						className='mix-blend-difference'
 						avatarProps={{
 							size: 'md',
 							showFallback: true,
@@ -53,8 +54,8 @@ export default function Post({ id, title, user, image, description, comments, li
 				<div className='absolute bottom-0 w-full flex justify-between p-3'>
 					<div className='flex flex-col justify-end w-full'>
 						<div>
-							<p className='text-white font-semibold text-3xl text-wrap'>{title}</p>
-							<p className='text-zinc-300 text-lg text-wrap'>{description}</p>
+							<p className='text-white font-semibold text-3xl text-wrap mix-blend-difference'>{title}</p>
+							<p className='text-zinc-300 text-lg text-wrap mix-blend-difference'>{description}</p>
 						</div>
 					</div>
 					<div className='flex flex-col gap-3'>
@@ -76,14 +77,16 @@ export default function Post({ id, title, user, image, description, comments, li
 							size='lg'
 							radius='full'
 							variant='light'
+							className='mix-blend-difference'
 							onClick={() => setOpenComments(!openComments)}
-							startContent={<PiChatCircleTextBold className='size-9 text-white' />}
+							startContent={<PiChatCircleTextBold className='size-9 text-white ' />}
 						/>
 						<Button
 							isIconOnly
 							size='lg'
 							radius='full'
 							variant='light'
+							className='mix-blend-difference'
 							startContent={<FaRegBookmark className='size-9 text-white' />}
 						/>
 						<Button
@@ -91,6 +94,7 @@ export default function Post({ id, title, user, image, description, comments, li
 							size='lg'
 							radius='full'
 							variant='light'
+							className='mix-blend-difference'
 							startContent={<LuSend className='size-9 text-white' />}
 						/>
 					</div>
