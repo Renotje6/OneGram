@@ -21,12 +21,6 @@ const NavBar: FC<NavBarProps> = ({}) => {
 						href='/'
 					/>
 					<NavButton
-						icon={<IoMdAddCircleOutline className='size-6 dark:text-zinc-300' />}
-						label='CREATE'
-						href='/create'
-					/>
-					
-					<NavButton
 					icon={<IoSearch className='size-6 dark:text-zinc-300' />}
 					label='SEARCH'
 					href='/search'

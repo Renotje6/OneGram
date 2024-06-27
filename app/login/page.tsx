@@ -159,6 +159,9 @@ export default function LoginPage() {
 							onClick={loginWithGoogle}
 						/>
 					</div>
+					<div className='flex justify-center'>
+						<a href="/register"><p className='text-sm'>register here</p></a>
+					</div>
 				</div>
 			</div>
 		</LoginLayout>
