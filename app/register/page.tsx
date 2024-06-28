@@ -31,7 +31,9 @@ export default function RegisterPage() {
 				uid: authUser.user.uid,
 				name,
 				email,
-				friends: [],
+				private: false,
+				following: [],
+				followRequests: [],
 				lastSeen: new Date().toISOString(),
 			});
 
@@ -75,7 +77,9 @@ export default function RegisterPage() {
 					uid: user.user.uid,
 					name: user.user.displayName,
 					email: user.user.email,
-					friends: [],
+					private: false,
+					following: [],
+					followRequests: [],
 					lastSeen: new Date().toISOString(),
 				});
 			}

@@ -9,7 +9,7 @@ import { collection, doc, getDoc, getDocs, onSnapshot, query, setDoc, where } fr
 import { useEffect, useState } from 'react';
 import { IoIosAddCircle, IoIosRemoveCircle } from 'react-icons/io';
 
-export default function AccountPage() {
+export default function SearchPage() {
 	const [users, setUsers] = useState<any[]>([]);
 	const [filteredUsers, setFilteredUsers] = useState<any[]>([]);
 	const [currentUser, setCurrentUser] = useState<any>(null);
@@ -30,17 +30,19 @@ export default function AccountPage() {
 			});
 
 			setUsers(userDocs);
-			// set filtered users to all users except friends
-			setFilteredUsers(userDocs.filter((user) => !currentUser.data()!.friends.includes(user.id)));
+			// set filtered users to all users except following
+			setFilteredUsers(userDocs.filter((user) => !currentUser.data()!.following.includes(user.id)));
 			setCurrentUser(currentUser.data());
 		};
 
 		fetchUsers();
 
 		// Set an event listener to update the user data when it changes
-		const unsubscribe = onSnapshot(doc(collection(db, 'users'), user.uid), (doc) => {
-			setCurrentUser(doc.data());
-		});
+		const unsubscribe = () => {
+			onSnapshot(doc(collection(db, 'users'), user.uid), (doc) => {
+				setCurrentUser(doc.data());
+			});
+		};
 
 		return () => {
 			unsubscribe();
@@ -52,18 +54,37 @@ export default function AccountPage() {
 		const userDocRef = doc(userCollection, user!.uid);
 		const userDocSnap = await getDoc(userDocRef);
 
-		if (userDocSnap.exists()) {
-			const userFriends = userDocSnap.data().friends;
+		const followUserRef = doc(userCollection, userId);
+		const followUserSnap = await getDoc(followUserRef);
 
-			if (userFriends.includes(userId)) return;
+		if (!followUserSnap.exists()) return;
 
-			userFriends.push(userId);
+		if (followUserSnap.data().private) {
+			const followRequests = followUserSnap.data().followRequests;
 
-			setDoc(userDocRef, {
-				...userDocSnap.data(),
-				friends: userFriends,
+			if (!followRequests || followRequests.includes(user!.uid)) return;
+
+			followRequests.push(user!.uid);
+
+			await setDoc(followUserRef, {
+				...followUserSnap.data(),
+				followRequests,
 			});
+		} else {
+			if (userDocSnap.exists()) {
+				const userfollowing = userDocSnap.data().following;
+
+				if (userfollowing.includes(userId)) return;
+
+				userfollowing.push(userId);
+
+				await setDoc(userDocRef, {
+					...userDocSnap.data(),
+					following: userfollowing,
+				});
+			}
 		}
+		window.location.reload();
 	};
 
 	const unfollowUser = async (userId: string) => {
@@ -72,22 +93,23 @@ export default function AccountPage() {
 		const userDocSnap = await getDoc(userDocRef);
 
 		if (userDocSnap.exists()) {
-			const userFriends = userDocSnap.data().friends;
+			const userfollowing = userDocSnap.data().following;
 
-			if (!userFriends.includes(userId)) return;
+			if (!userfollowing.includes(userId)) return;
 
-			const newFriends = userFriends.filter((friend: string) => friend !== userId);
+			const newfollowing = userfollowing.filter((friend: string) => friend !== userId);
 
-			setDoc(userDocRef, {
+			await setDoc(userDocRef, {
 				...userDocSnap.data(),
-				friends: newFriends,
+				following: newfollowing,
 			});
 		}
+		window.location.reload();
 	};
 
 	return (
 		<MainLayout>
-			<div className=' flex justify-center mt-5 text-5xl '>Search friends</div>
+			<div className=' flex justify-center mt-5 text-5xl '>Search following</div>
 			<div className='flex justify-center mt-5'>
 				<Input
 					type='search'
@@ -95,7 +117,7 @@ export default function AccountPage() {
 					placeholder='Search users...'
 					className='w-1/2'
 					onChange={(e) => {
-						e.target.value ? setFilteredUsers(users.filter((user) => user.name.toLowerCase().includes(e.target.value.toLowerCase()))) : setFilteredUsers(users.filter((user) => !currentUser.friends.includes(user.id)));
+						e.target.value ? setFilteredUsers(users.filter((user) => user.name.toLowerCase().includes(e.target.value.toLowerCase()))) : setFilteredUsers(users.filter((user) => !currentUser.following.includes(user.id)));
 					}}
 				/>
 			</div>
@@ -109,7 +131,13 @@ export default function AccountPage() {
 							lastSeen={fUser.lastSeen}
 							image={fUser.avatar}
 							endContent={
-								currentUser.friends.includes(fUser.id) ? (
+								fUser.followRequests && fUser.followRequests.includes(currentUser.uid) ? (
+									<Button
+										className='flex items-center'
+										disabled>
+										<span className='mr-5'>Follow Requested</span>
+									</Button>
+								) : currentUser.following.includes(fUser.id) ? (
 									<Button
 										className='flex items-center'
 										onClick={(e) => {
