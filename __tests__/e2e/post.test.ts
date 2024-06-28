@@ -4,7 +4,7 @@ test.describe.configure({
 	timeout: 1000000,
 });
 
-test.skip('Post a test post', async ({ page }) => {
+test('Post a test post', async ({ page }) => {
 	const randomNumber = Math.floor(Math.random() * 1000000);
 
 	await page.goto('http://localhost:3000/login');

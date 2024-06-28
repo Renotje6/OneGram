@@ -15,11 +15,11 @@ test('should be able to follow a user', async ({ page }) => {
 	await page.waitForURL('http://localhost:3000/');
 	await page.getByRole('button', { name: 'SEARCH' }).click();
 	await page.waitForURL('http://localhost:3000/search');
-	await expect(page.getByRole('main')).toContainText('test2');
+	await expect(page.getByRole('main')).toContainText(/test2/i);
 	await page.locator('a').filter({ hasText: /test2/ }).locator('button').click();
-	await expect(page.getByRole('main')).toContainText('test2');
+	await expect(page.getByRole('main')).toContainText(/test2/i);
 	await page.getByPlaceholder('Search users...').click();
 	await page.getByPlaceholder('Search users...').fill('test2');
 	await page.locator('button').filter({ hasText: 'Unfollow' }).click();
-	await expect(page.getByRole('main')).toContainText('test2');
+	await expect(page.getByRole('main')).toContainText(/test2/i);
 });

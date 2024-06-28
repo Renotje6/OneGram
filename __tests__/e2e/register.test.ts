@@ -7,7 +7,7 @@ const randomNumber = Math.floor(Math.random() * 1000000);
 test('Should be able to register', async ({ page }) => {
 	await page.goto('http://localhost:3000/register');
 
-	await page.fill('input[name="name"]', 'John Doe');
+	await page.fill('input[name="name"]', `John Doe ${randomNumber}`);
 	await page.fill('input[name="email"]', `john.doe${randomNumber}@mail.com`);
 	await page.fill('input[name="password"]', 'password');
 	await page.click('button[name="submit"]');

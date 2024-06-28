@@ -135,17 +135,6 @@ export default function Post({ id, title, user, image, description, comments, li
 									<p className='text-sm'>{comment.comment}</p>
 								</div>
 							))}
-							{/* <div className='bg-white/5 p-2 rounded-lg'>
-								<User
-									classNames={{ name: 'text-zinc-300' }}
-									name='Jane Doe'
-									avatarProps={{
-										size: 'sm',
-										src: 'https://i.pravatar.cc/150?u=a04258114e29026702d',
-									}}
-								/>
-								<p className='text-sm'>This is a placeholder comment!</p>
-							</div> */}
 						</div>
 					</div>
 				</div>
