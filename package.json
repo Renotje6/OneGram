@@ -8,7 +8,8 @@
 		"start": "next start",
 		"lint": "next lint",
 		"test": "jest",
-		"playwright": "npx playwright test --ui"
+		"playwright": "npx playwright test --ui",
+		"coverrage": "jest --coverage"
 	},
 	"dependencies": {
 		"@nextui-org/react": "^2.4.1",
