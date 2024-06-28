@@ -8,12 +8,12 @@ describe('CreatePostModal Component', () => {
       <CreatePostModal isOpen={true} modalToggle={() => {}} />
     );
 
-    // Check if modal header is rendered
+    // alle juiste teksten genereren
     expect(screen.getByText('Add Post')).toBeInTheDocument();
-
-    // Check if form inputs are rendered
     expect(screen.getByLabelText('Title')).toBeInTheDocument();
     expect(screen.getByLabelText('Description')).toBeInTheDocument();
-    expect(screen.getByLabelText('Image')).toBeInTheDocument();
+    expect(screen.getByTestId('Image')).toBeInTheDocument();
+    expect(screen.getByText('Create')).toBeInTheDocument();
+
   });
 });

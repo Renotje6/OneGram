@@ -93,6 +93,7 @@ const CreatePostModal: FC<ModalLoginProps> = ({ isOpen, modalToggle }) => {
 							<input
 								type='file'
 								accept='image/*'
+								data-testid='Image'
 								// isClearable
 								// size='sm'
 								// isRequired
@@ -113,6 +114,7 @@ const CreatePostModal: FC<ModalLoginProps> = ({ isOpen, modalToggle }) => {
 								variant='flat'
 								isLoading={isSubmitting}
 								type='submit'>
+								
 								Create
 							</Button>
 						</div>
