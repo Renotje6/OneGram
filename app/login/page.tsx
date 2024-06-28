@@ -80,7 +80,9 @@ export default function LoginPage() {
 					uid: user.user.uid,
 					name: user.user.displayName,
 					email: user.user.email,
-					friends: [],
+					private: false,
+					following: [],
+					followRequests: [],
 					lastSeen: new Date().toISOString(),
 				});
 			} else {
@@ -160,7 +162,9 @@ export default function LoginPage() {
 						/>
 					</div>
 					<div className='flex justify-center'>
-						<a href="/register"><p className='text-sm'>register here</p></a>
+						<a href='/register'>
+							<p className='text-sm'>register here</p>
+						</a>
 					</div>
 				</div>
 			</div>

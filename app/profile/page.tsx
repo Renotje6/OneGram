@@ -15,6 +15,8 @@ export default function AccountPage() {
 	const [posts, setPosts] = useState<Post[]>([]);
 
 	useEffect(() => {
+		console.log('AccountPage');
+
 		if (!user) return;
 		const fetchPosts = async () => {
 			const postsCollection = collection(db, `posts/`);

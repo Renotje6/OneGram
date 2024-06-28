@@ -29,6 +29,8 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 	const pathname = usePathname();
 
 	useEffect(() => {
+		console.log('UserProvider');
+
 		async function getUser() {
 			if (auth.currentUser) {
 				const userCollection = collection(db, 'users');

@@ -34,7 +34,7 @@ const CreatePostModal: FC<ModalLoginProps> = ({ isOpen, modalToggle }) => {
 	const onSubmit: SubmitHandler<FormFields> = async (formData) => {
 		try {
 			const storage = getStorage();
-			const storageRef = ref(storage, `posts/${auth.currentUser?.uid}/${formData.image}_${Date.now()}`);
+			const storageRef = ref(storage, `posts/${auth.currentUser?.uid}/${formData.image[0].name}_${Date.now()}`);
 
 			try {
 				const snapshot = await uploadBytes(storageRef, formData.image[0]);
@@ -49,6 +49,8 @@ const CreatePostModal: FC<ModalLoginProps> = ({ isOpen, modalToggle }) => {
 					likes: [],
 					comments: [],
 				});
+
+				modalToggle();
 			} catch (error: any) {
 				setError('root', { message: error.message });
 			}

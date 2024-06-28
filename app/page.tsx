@@ -13,6 +13,7 @@ export default function Home() {
 	const { user } = useUser();
 
 	useEffect(() => {
+		console.log('Homepage');
 		if (!user) return;
 
 		// fetch posts
@@ -26,7 +27,7 @@ export default function Home() {
 			}) as Post[];
 
 			// Filter posts to only include posts from people the user follows
-			posts = posts.filter((post) => currentUser.data()!.friends.length > 0 && currentUser.data()!.friends.includes(post.owner));
+			posts = posts.filter((post) => currentUser.data()!.following?.length > 0 && currentUser.data()!.following.includes(post.owner));
 
 			const storage = getStorage();
 
