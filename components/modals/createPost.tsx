@@ -90,15 +90,15 @@ const CreatePostModal: FC<ModalLoginProps> = ({ isOpen, modalToggle }) => {
 								errorMessage={errors.description?.message?.toString()}
 								{...register('description', { required: 'Description is required' })}
 							/>
-							<Input
+							<input
 								type='file'
 								accept='image/*'
-								isClearable
-								size='sm'
-								isRequired
-								label='Image'
-								isInvalid={!!errors.image}
-								errorMessage={errors.image?.message?.toString()}
+								// isClearable
+								// size='sm'
+								// isRequired
+								// label='Image'
+								// isInvalid={!!errors.image}
+								// errorMessage={errors.image?.message?.toString()}
 								{...register('image', { required: 'Image is required' })}
 							/>
 						</div>
