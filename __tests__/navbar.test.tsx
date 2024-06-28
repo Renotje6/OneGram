@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 import NavBar from '@/components/navbar'; // Adjust the path accordingly
 import '@testing-library/jest-dom/';
 import { render, screen } from '@testing-library/react';
