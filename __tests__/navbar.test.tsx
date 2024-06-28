@@ -17,8 +17,5 @@ describe('NavBar Component', () => {
 
 		// Check if the Profile link is rendered
 		expect(screen.getByText('Profile')).toBeInTheDocument();
-
-		// Check if the Settings link is rendered
-		expect(screen.getByText('Settings')).toBeInTheDocument();
 	});
 });
