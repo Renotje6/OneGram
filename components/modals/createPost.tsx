@@ -51,6 +51,7 @@ const CreatePostModal: FC<ModalLoginProps> = ({ isOpen, modalToggle }) => {
 				});
 
 				modalToggle();
+				alert('Post created successfully');
 			} catch (error: any) {
 				setError('root', { message: error.message });
 			}
@@ -105,6 +106,7 @@ const CreatePostModal: FC<ModalLoginProps> = ({ isOpen, modalToggle }) => {
 					<ModalFooter>
 						<div className='w-full flex justify-center gap-5'>
 							<Button
+								name='submit'
 								size='sm'
 								className='rounded-md'
 								color='primary'

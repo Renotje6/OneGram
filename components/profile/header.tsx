@@ -73,6 +73,7 @@ export default function ProfileHeader({ name, bio, avatar, currentUserProfile = 
 			{currentUserProfile && (
 				<>
 					<Button
+						name='createPost'
 						isIconOnly
 						onClick={() => {
 							toggleModal('createPost');

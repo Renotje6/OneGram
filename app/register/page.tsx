@@ -121,18 +121,21 @@ export default function RegisterPage() {
 					<h1 className='text-5xl font-semibold md:hidden text-center'>OneGram</h1>
 					<div className='flex flex-col items-center gap-2'>
 						<Input
+							name='name'
 							placeholder='Name'
 							onChange={(e) => {
 								setName(e.target.value);
 							}}
 						/>
 						<Input
+							name='email'
 							placeholder='Email'
 							onChange={(e) => {
 								setEmail(e.target.value);
 							}}
 						/>
 						<Input
+							name='password'
 							placeholder='Password'
 							type='password'
 							onChange={(e) => {
@@ -141,6 +144,7 @@ export default function RegisterPage() {
 						/>
 						{error && <div className='w-full bg-red-200 text-red-800 p-3 rounded-md'>{error}</div>}
 						<Button
+							name='submit'
 							color='primary'
 							className='w-full'
 							onClick={signUpWithEmailAndPassword}>

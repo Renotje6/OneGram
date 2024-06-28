@@ -57,13 +57,17 @@ export default function LoginPage() {
 					case 'auth/wrong-password':
 						setError('Wrong password');
 						break;
+					case 'auth/invalid-email':
+						setError('Invalid email');
+						break;
 					default:
 						setError('An error occurred');
 						console.error(e);
 						break;
 				}
+			} else {
+				setError(e.message);
 			}
-			setError(e.message);
 			setLoading(false);
 		}
 	};
@@ -110,7 +114,6 @@ export default function LoginPage() {
 	return (
 		<LoginLayout>
 			<div className='bg-black/10 flex w-[90%] md:w-[600px] h-[400px] rounded-xl'>
-				{error && <div className='w-full bg-red-200 text-red-800 p-3 rounded-md'>{error}</div>}
 				<div className='w-full justify-center items-center flex-col gap-8 text-center bg-black/5 h-full hidden md:flex'>
 					<p className='text-5xl font-semibold'>OneGram</p>
 					<p className='text-zinc-200'>
@@ -128,19 +131,23 @@ export default function LoginPage() {
 					<h1 className='text-5xl font-semibold md:hidden text-center'>OneGram</h1>
 					<div className='flex flex-col items-center gap-2'>
 						<Input
+							name='email'
 							placeholder='Email'
 							onChange={(e) => {
 								setEmail(e.target.value);
 							}}
 						/>
 						<Input
+							name='password'
 							placeholder='Password'
 							type='password'
 							onChange={(e) => {
 								setPassword(e.target.value);
 							}}
 						/>
+						{error && <div className='w-full bg-red-200 text-red-800 p-3 rounded-md'>{error}</div>}
 						<Button
+							name='submit'
 							color='primary'
 							className='w-full'
 							onClick={(e) => {
