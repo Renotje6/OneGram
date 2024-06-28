@@ -2,12 +2,9 @@ import { Button, Divider } from '@nextui-org/react';
 import Link from 'next/link';
 import { FC } from 'react';
 import { FaHome, FaUserCircle } from 'react-icons/fa';
-import { FaGear } from 'react-icons/fa6';
-import { IoMdAddCircleOutline } from 'react-icons/io';
 import { IoSearch } from 'react-icons/io5';
 
 interface NavBarProps {}
-
 
 const NavBar: FC<NavBarProps> = ({}) => {
 	return (
@@ -21,9 +18,9 @@ const NavBar: FC<NavBarProps> = ({}) => {
 						href='/'
 					/>
 					<NavButton
-					icon={<IoSearch className='size-6 dark:text-zinc-300' />}
-					label='SEARCH'
-					href='/search'
+						icon={<IoSearch className='size-6 dark:text-zinc-300' />}
+						label='SEARCH'
+						href='/search'
 					/>
 				</div>
 				<div className='h-fit flex gap-2 flex-col'>
@@ -32,11 +29,6 @@ const NavBar: FC<NavBarProps> = ({}) => {
 						icon={<FaUserCircle className='size-6' />}
 						label='Profile'
 						href='/profile'
-					/>
-					<NavButton
-						icon={<FaGear className='size-6' />}
-						label='Settings'
-						href='/settings'
 					/>
 				</div>
 			</div>
