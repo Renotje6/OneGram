@@ -20,7 +20,7 @@ test('Error should be shown when email is already in use', async ({ page }) => {
 	await page.goto('http://localhost:3000/register');
 
 	await page.fill('input[name="name"]', 'Test');
-	await page.fill('input[name="email"]', `test.test@com`);
+	await page.fill('input[name="email"]', `test@test.com`);
 	await page.fill('input[name="password"]', 'test1234');
 
 	await page.click('button[name="submit"]');
