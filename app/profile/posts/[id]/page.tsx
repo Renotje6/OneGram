@@ -19,8 +19,6 @@ export default function MenuPage() {
 	const { id } = useParams();
 
 	useEffect(() => {
-		console.log('MenuPage');
-
 		const fetchPost = async () => {
 			const postSnapshot = await getDoc(doc(db, 'posts/', id as string));
 

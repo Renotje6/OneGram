@@ -12,8 +12,6 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
 	const [hydrating, setHydrating] = useState(true);
 
 	useEffect(() => {
-		console.log('MainLayout');
-
 		setHydrating(false);
 	}, []);
 

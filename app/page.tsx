@@ -13,7 +13,6 @@ export default function Home() {
 	const { user } = useUser();
 
 	useEffect(() => {
-		console.log('Homepage');
 		if (!user) return;
 
 		// fetch posts

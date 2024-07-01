@@ -19,8 +19,6 @@ export default function Page() {
 	const { id } = useParams();
 
 	useEffect(() => {
-		console.log('ProfilePage');
-
 		if (!user) return;
 
 		const fetchData = async () => {
