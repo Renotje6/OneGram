@@ -30,7 +30,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
 	useEffect(() => {
 		async function getUser() {
-			if (auth.currentUser) {
+			if (auth.currentUser && pathname !== '/login' && pathname !== '/register') {
 				const userCollection = collection(db, 'users');
 				const userDocRef = doc(userCollection, auth.currentUser.uid);
 
